@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Customer\Controller\Account\Logout">
+        <plugin name="redirect-to-login-after-logout" type="Wheelpros\CustomerExtended\Plugin\Controller\Account\LogoutRedirectAfter"/>
+    </type>
+    <virtualType name="Wheelpros\CustomerExtended\Virtual\Logger\Handler\SalesforceApi" type="Magento\Framework\Logger\Handler\Base">
+        <arguments>
+            <argument name="fileName" xsi:type="string">/var/log/salesforce_api.log</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Wheelpros\CustomerExtended\Virtual\Logger\SalesforceApi" type="Magento\Framework\Logger\Monolog">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="debug" xsi:type="object">Wheelpros\CustomerExtended\Virtual\Logger\Handler\SalesforceApi</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Wheelpros\CustomerExtended\Model\SalesforceApi">
+        <arguments>
+            <argument name="logger" xsi:type="object">Wheelpros\CustomerExtended\Virtual\Logger\SalesforceApi</argument>
+        </arguments>
+    </type>
+</config>
